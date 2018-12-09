@@ -26,13 +26,15 @@ namespace Create_XML_from_xlsx
                 {
                     // The insertSQL string contains a SQL statement that
                     // inserts a new row in the source table.
-                    OleDbCommand command = new OleDbCommand("Select * From [카드 일람$]", connection);
+                    //OleDbCommand command = new OleDbCommand("Select * From [카드 일람$]", connection);
+                    OleDbCommand command = new OleDbCommand("Select * From [초연대스킬$]", connection);
                     // Open the connection and execute the insert command.
                     try
                     {
                         connection.Open();
                         OleDbDataReader reader = command.ExecuteReader();
 
+                        /* for Cards
                         while (reader.Read())
                         {
                             xml.Add(new XElement("card",
@@ -51,7 +53,20 @@ namespace Create_XML_from_xlsx
                                     new XElement("assist", reader[15].ToString()),
                                     new XElement("assist_effect", reader[16].ToString())
                                 ));
+                        }*/
+
+                        while (reader.Read())
+                        {
+                            xml.Add(new XElement("group_skill",
+                                    new XElement("name", reader[0].ToString()),
+                                    new XElement("effect", reader[1].ToString()),
+                                    new XElement("necessary_duplication", reader[2].ToString()),
+                                    new XElement("necessary", reader[3].ToString()),
+                                    new XElement("additional_duplication", reader[4].ToString()),
+                                    new XElement("additional", reader[5].ToString())
+                                ));
                         }
+
                         reader.Close();
                     }
                     catch (Exception ex)
